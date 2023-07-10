@@ -1,3 +1,4 @@
+import {useRouter} from 'next/router';
 import type PostType from "@/interfaces/post"
 import { getAllPosts, getPostBySlug } from '@/lib/api';
 import markdownToHtml from '@/lib/markdownToHtml';
@@ -14,7 +15,9 @@ type Props = {
 }
 
 export default function Post({post, morePosts}: Props){
-  if(!post?.slug){
+  const router = useRouter();
+
+  if(!router.isFallback && !post?.slug){
     return <>Error!!</>
   }
 
@@ -22,13 +25,18 @@ export default function Post({post, morePosts}: Props){
     <>
       <Layout>
         <Container>
-          <article className="mb-32">
-            <PostHeader 
-              title={post.title}
-              date={post.date}
-            />
-            <PostBody content={post.content}/>
-          </article>
+          {router.isFallback ? (
+            <>Loading...</>
+          ): (
+            <article className="mb-32">
+              <PostHeader 
+                title={post.title}
+                date={post.date}
+              />
+              <PostBody content={post.content}/>
+            </article>
+          )}
+          
         </Container>
       </Layout>
     </>
