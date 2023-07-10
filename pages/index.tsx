@@ -17,7 +17,8 @@ export default function Index({allPosts} : Props){
     <>
       <Layout>
         <Head>
-          <title>Blog Starter</title>  
+          <title>Blog Starter</title> 
+          <meta name="description" content="Blog Starter" /> 
         </Head>        
         <Container>
           <ul>
@@ -38,12 +39,10 @@ export default function Index({allPosts} : Props){
 
 export const getStaticProps = async () => {
   const allPosts = getAllPosts([
-    'categories',
-    'date',
-    'description',
     'slug',
-    'tags',
     'title',
+    'date',
+    'description'
   ])
 
   return {
