@@ -1,34 +1,93 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# 프리온보딩 프론트엔드 챌린지
+## 프리온보딩 프론트엔드 챌린지 과제 1
+React와 History API 사용하여 SPA Router 기능 구현하기
 
-## Getting Started
+### 요구사항
+1) 사용자는 루트 경로의 `_posts` 폴더에 작성된 마크다운 파일(`.md`)를 작성할 수 있어야 합니다. 해당 파일은 마크다운 본문과 게시물에 대한 meta data를 담을 수 있어야 합니다. 아래는 마크다운에 jekyll에서 만든 `frontmatter` 라는 문법을 적용한 예시입니다.
+```
+categories:
+  - Development
+  - VIM
+date: "2012-04-06"
+description: 설명을 적는 곳입니다
+slug: spf13-vim-3-0-release-and-new-website
+tags:
+  - .vimrc
+  - plugins
+  - spf13-vim
+  - vim
+title: hello
+---
 
-First, run the development server:
-
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
+## 예시입니다
+- 예시입니다
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2) 블로그에 작성된 게시물을 렌더링하는 `목록 페이지`와 개별 게시물을 렌더링하는 `상세 페이지`로 나누어 작성해주세요.
+   + `/` - 목록 페이지
+   + `/[id]` - 상세 페이지
+   + 마크다운을 JavaScript로 변환해주는 도구는 `remark`(마크다운 Parser), `remark-html`(remark로 파싱한 데이터를 html로 변환)을 참고
+   + 각 마크다운의 meta data는 `gray-matter`, `frontmatter` 참고
+   + 마크다운을 React에 삽입할 때는 `dangerouslySetInnerHTML`을 사용
+   + (추가 구현) 코드 하이라이터는 `highlight.js`,`prism.js`를 참고
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+:: Next.js 12에서 지원하는 Prefetching 메서드를 적절히 사용해주세요.
+  + Next.js 13을 설치하고 Pages Router를 사용하셔도 됩니다.
+  + 정적 페이지를 생성할 때 필요한 데이터 생성 → `getStaticProps`
+  + 각 포스트를 그려줄 상세 페이지 경로를 생성 → `getStaticPaths`
 
-## Learn More
+:: 참고 사항
+  + 가급적 TypeScript로 진행하시는 걸 추천드립니다.
+  + 과제의 목적이 디자인에 있지는 않기 때문에 UI 관련 라이브러리는 자유롭게 사용하셔도 좋습니다. 단, 라이브러리의 종류와 Next.js 간 호환이 잘 맞지 않아 에러가 발생하는 경우가 있을 수 있으니 유의하여 사용해주세요.
+  + CSS-in-JS 라이브러리 사용 시 `_document.js`(Next.js 공식 문서 참고)에 각 라이브러리(`styled-components`,`emotion`,...)에 알맞은 세팅을 추가해주세요.
+  + (선택) Vercel이나 Netlify를 활용하면 정적 페이지를 간단하게 배포할 수 있습니다.
+  + 과제 완료 후 과제 제출 스레드에 해당 프로젝트의 github 링크로 제출해주세요. 프로젝트에 대한 간단한 소개가 README에 작성되어 있으면 좋습니다.
+  + 이 외에 추가 구현하고 싶은 기능이 있으면 자유롭게 구현해주세요.
+   
+------------
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+### 과제 설명
+📂 파일 구조
+```
+📦src
+ ┣📦_posts
+ ┃ ┣ 📜article01.md
+ ┃ ┗ 📜home.md
+ ┣📦.next
+ ┣📦components
+ ┃ ┣ 📜container.tsx
+ ┃ ┣ 📜date-formatter.tsx
+ ┃ ┣ 📜layout.tsx
+ ┃ ┣ 📜post-body.tsx
+ ┃ ┣ 📜post-header.tsx
+ ┃ ┗ 📜post-title.tsx
+ ┣📦interfaces
+ ┃ ┗ 📜post.ts
+ ┣📦lib
+ ┃ ┣ 📜api.ts
+ ┃ ┗ 📜markdownToHtml.ts
+ ┣📦node_modules
+ ┣📦pages
+ ┃ ┣ 📂posts
+ ┃ ┃ ┗ 📜[slug].tsx
+ ┃ ┣ 📜index.tsx
+ ┃ ┣ 📜_app.tsx
+ ┃ ┗ 📜_document.tsx
+ ┣ 📜.eslintrc.json
+ ┣ 📜.gitignore
+ ┣ 📜next-env.d.ts
+ ┣ 📜next.config.js
+ ┣ 📜package.json
+ ┣ 📜postcss.config.js
+ ┣ 📜README.md
+ ┣ 📜tailwind.config.js
+ ┣ 📜tsconfig.json
+ ┗ 📜yarn.lock
+```
++ components : 페이지 안 컴포넌트 설정
++ interfaces : 게시글 객체의 type 설정
++ lib
+  + markdownToHtml : 마크다운 문법을 html 문법으로 변환해주는 파일
+  + api : 게시글들을 가져와 시간순서대로 정렬.
++ pages : 렌더링되는 페이지들
