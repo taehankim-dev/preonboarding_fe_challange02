@@ -3,7 +3,8 @@ import Head from "next/head"
 import Link from "next/link"
 
 import Layout from "@/components/layout"
-import Container from "@/components/container"
+import { Intro } from "@/components/intro"
+import {IntroContainer} from "@/components/container"
 
 import type PostType from "@/interfaces/post"
 
@@ -12,7 +13,6 @@ type Props = {
 }
 
 export default function Index({allPosts} : Props){
-  console.log(allPosts)
   return (
     <>
       <Layout>
@@ -20,18 +20,17 @@ export default function Index({allPosts} : Props){
           <title>Blog Starter</title> 
           <meta name="description" content="Blog Starter" /> 
         </Head>        
-        <Container>
-          <ul>
+        <Intro />
+        <IntroContainer>
             {allPosts.map((post) => (
-              <li key={post.slug}>
+              <div key={post.slug}>
                   <Link as={`/posts/${post.slug}`}
                         href="/posts/[slug]">
                     {post.title}
                   </Link>
-              </li>
+              </div>
             ))}
-          </ul>
-        </Container>
+        </IntroContainer>
       </Layout>
     </>
   )

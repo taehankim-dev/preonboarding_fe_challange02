@@ -4,9 +4,9 @@ import { getAllPosts, getPostBySlug } from '@/lib/api';
 import markdownToHtml from '@/lib/markdownToHtml';
 
 import Layout from '@/components/layout';
-import Container from '@/components/container';
 import PostHeader from '@/components/post-header';
 import PostBody from '@/components/post-body';
+import {PageContainer} from '@/components/container';
 
 
 type Props = {
@@ -24,7 +24,7 @@ export default function Post({post, morePosts}: Props){
   return (
     <>
       <Layout>
-        <Container>
+        <PageContainer>
           {router.isFallback ? (
             <>Loading...</>
           ): (
@@ -37,7 +37,7 @@ export default function Post({post, morePosts}: Props){
             </article>
           )}
           
-        </Container>
+        </PageContainer>
       </Layout>
     </>
   )

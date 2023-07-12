@@ -1,15 +1,11 @@
+import StyledComponentsRegistry from "@/lib/registry";
+
 type Props = {
   children : React.ReactNode
 }
 
 const Layout = ({children} : Props) => {
-  return (
-    <>
-      <div className="min-h-screen">
-        <main>{children}</main>
-      </div>
-    </>
-  )
+  return <StyledComponentsRegistry>{children}</StyledComponentsRegistry>
 }
 
 export default Layout;
