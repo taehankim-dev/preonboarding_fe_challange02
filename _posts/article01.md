@@ -2,6 +2,7 @@
 title: Article01
 slug : 'article01'
 date: "2012-07-10"
+coverImage : "/images/back02.jpeg"
 description: 첫번째 내용!
 ---
 

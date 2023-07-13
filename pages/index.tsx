@@ -3,8 +3,7 @@ import Head from "next/head"
 import Link from "next/link"
 
 import Layout from "@/components/layout"
-import { Intro } from "@/components/intro"
-import {IntroContainer} from "@/components/container"
+import { Intro, IntroContainer, IntroArticle, IntroContents } from "@/components/intro"
 
 import type PostType from "@/interfaces/post"
 
@@ -23,12 +22,15 @@ export default function Index({allPosts} : Props){
         <Intro />
         <IntroContainer>
             {allPosts.map((post) => (
-              <div key={post.slug}>
+              <IntroArticle key={post.slug}>
                   <Link as={`/posts/${post.slug}`}
-                        href="/posts/[slug]">
-                    {post.title}
+                        href="/posts/[slug]"
+                        style={{display:"block"}}>
+                    <IntroContents title={post.title} 
+                                   date={post.date}
+                                   description={post.description} />
                   </Link>
-              </div>
+              </IntroArticle>
             ))}
         </IntroContainer>
       </Layout>

@@ -2,7 +2,8 @@
 title: hello
 slug : 'home'
 date: "2012-07-10"
-description: 설명을 적는 곳입니다.
+coverImage : "/images/back01.jpeg"
+description: 설명을 적는 곳입니다. 안녕하세요. home입니다. 설명을 적는 곳이구요. 20글자가 넘어가는 것을 테스트 하기 위해서 작성 중이네요.
 ---
 
 ## 예시입니다
