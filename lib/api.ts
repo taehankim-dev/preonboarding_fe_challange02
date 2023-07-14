@@ -3,11 +3,8 @@ import matter from "gray-matter";
 import markdownToHtml from '@/lib/markdownToHtml';
 
 export const getAllPostData = () => {
-  const posts = readdirSync("./_posts").map((file) => {
-    const post = readFileSync(`./_posts/${file}`, 'utf-8');
-
-    console.log("api post : ", post)
-    console.log("api matter post : ", matter(post))
+  const posts = readdirSync("_posts").map((file) => {
+    const post = readFileSync(`_posts/${file}`, 'utf-8');
     return matter(post).data;
   });
 
@@ -17,7 +14,7 @@ export const getAllPostData = () => {
 }
 
 export const getPostDetailData = async (postId : number) => {
-  const post = readFileSync(`./_posts/${postId}.md`, 'utf-8');
+  const post = readFileSync(`_posts/${postId}.md`, 'utf-8');
   const {data, content} = matter(post);
 
   return {meta : data, content : await markdownToHtml(content)};
