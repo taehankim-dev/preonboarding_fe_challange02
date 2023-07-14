@@ -1,4 +1,4 @@
-'use client';
+'use client'
 
 import styled from 'styled-components';
 import DateFormatter from "@/components/date-formatter";
@@ -67,6 +67,10 @@ export const IntroArticle = styled.article`
   padding:24px;
   background-color : lightgoldenrodyellow;
   border-radius : 7px;
+  transition:all 0.3s;
+  &:hover{
+    box-shadow:0px 0px 7px black;
+  }
 `
 
 export const IntroContainer = ({children} : IntroContainerProps) => {

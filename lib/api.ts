@@ -1,47 +1,24 @@
-import fs from 'fs';
-import {join} from 'path';
-import matter from 'gray-matter';
+import { readdirSync, readFileSync } from "fs";
+import matter from "gray-matter";
+import markdownToHtml from '@/lib/markdownToHtml';
 
-const postsDirectory = join(process.cwd(), '_posts');
+export const getAllPostData = () => {
+  const posts = readdirSync("./_posts").map((file) => {
+    const post = readFileSync(`./_posts/${file}`, 'utf-8');
 
-export function getPostSlugs() {
-  return fs.readdirSync(postsDirectory);
-}
+    console.log("api post : ", post)
+    console.log("api matter post : ", matter(post))
+    return matter(post).data;
+  });
 
-export function getPostBySlug(slug : string, fields : string[] = []){
-  const realSlug = slug.replace(/\.md$/, '');
-  const fullPath = join(postsDirectory, `${realSlug}.md`);
-  const fileContents = fs.readFileSync(fullPath, 'utf8');
-  const {data, content} = matter(fileContents);
-
-  type Items = {
-    [key : string]: string
-  }
-
-  const items: Items = {};
-
-  fields.forEach((field) => {
-    if(field === 'slug'){
-      items[field] = realSlug
-    }
-
-    if(field === 'content'){
-      items[field] = content
-    }
-
-    if(typeof data[field] !== 'undefined'){
-      items[field] = data[field]
-    }
-  })
-
-  return items
-}
-
-export function getAllPosts(fields : string[] = []){
-  const slugs = getPostSlugs();
-  const posts = slugs
-                .map((slug) => getPostBySlug(slug, fields))
-                .sort((post1, post2) => (post1.date > post2.date ? -1 : 1));
+  console.log("api posts : ", posts)
 
   return posts;
+}
+
+export const getPostDetailData = async (postId : number) => {
+  const post = readFileSync(`./_posts/${postId}.md`, 'utf-8');
+  const {data, content} = matter(post);
+
+  return {meta : data, content : await markdownToHtml(content)};
 }
