@@ -1,6 +1,6 @@
 # 프리온보딩 프론트엔드 챌린지
-## 프리온보딩 프론트엔드 챌린지 과제 2
-Next.js로 마크다운 블로그 만들기 (1/2)
+## 프리온보딩 프론트엔드 챌린지 과제 2 + 3
+Next.js로 마크다운 블로그 만들기
 
 `Next.js로 마크다운으로 작성한 블로그를 정적 페이지(SSG)로 작성해주세요.`
 
@@ -46,7 +46,27 @@ title: hello
   + (선택) Vercel이나 Netlify를 활용하면 정적 페이지를 간단하게 배포할 수 있습니다.
   + 과제 완료 후 과제 제출 스레드에 해당 프로젝트의 github 링크로 제출해주세요. 프로젝트에 대한 간단한 소개가 README에 작성되어 있으면 좋습니다.
   + 이 외에 추가 구현하고 싶은 기능이 있으면 자유롭게 구현해주세요.
-   
+
+------------
+
+### 추가 사항(23.07.14)
+1) Page Router로 작성된 코드를 Next.js 13 버전의 App Router로 변경해보세요.
+   + 서버 컴포넌트9React Server Components)에 대해 학습해주세요.
+     + Next.js 공식 문서 : https://nextjs.org/docs/getting-started/react-essentials#thinking-in-server-components
+     + [번역] RSC From Scratch. Part 1: Server Components : https://velog.io/@glassfrog8256/번역-RSC-From-Scratch.-Part-1-Server-Components
+   + getStaticPaths는 ![generateStaticParams](https://nextjs.org/docs/app/api-reference/functions/generate-static-params)로 대체해주세요.
+     + getServerSideProps, getStaticProps, getStaticPaths 등의 서버 사이드 API는 사용되지 않습니다. 조금 더 정확히 표현하자면 사용할 필요가 없어졌습니다.
+       > The new data fetching in Next.js 13 is built on top of the `[fetch()` Web API](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API) and makes use of `async` / `await` in Server Components.
+       > Now, instead of using `getServerSideProps()` and `getStaticProps()`, **all fetched data is static by default**, meaning it's rendered at build time. However, Next.js extends the `fetch` options object to allow each request to set its own [caching and revalidating rules](https://beta.nextjs.org/docs/data-fetching/caching?utm_source=vercel_site&utm_medium=blog&utm_campaign=blog_fetching_data_faster). With the `[{next: revalidate}` option](https://beta.nextjs.org/docs/data-fetching/revalidating?utm_source=vercel_site&utm_medium=blog&utm_campaign=blog_fetching_data_faster), you are able to refresh any piece of your static data, either at a set interval or when that piece changes in your backend.
+       > For dynamic data that changes often or is specific to users, you can pass the `[{cache: no-store}` option](https://beta.nextjs.org/docs/data-fetching/fetching#dynamic-data-fetching?utm_source=vercel_site&utm_medium=blog&utm_campaign=blog_fetching_data_faster) in the `fetch` request.
+       > https://vercel.com/blog/nextjs-app-router-data-fetching
+    + SEO 설정을 위해 ![generateMetadata](https://nextjs.org/docs/app/api-reference/functions/generate-metadata)를 사용해주세요.
+    + 참고 자료
+      + SSG at Playground : [https://github.com/vercel/app-playground/blob/main/app/ssg/[id]/page.tsx](https://github.com/vercel/app-playground/blob/main/app/ssg/%5Bid%5D/page.tsx)
+      + App Router : https://nextjs.org/docs/app/building-your-application/routing
+      + Migration 가이드 : https://nextjs.org/docs/app/building-your-application/upgrading/app-router-migration
+      + Next.js 13 Blog Example : https://velog.io/@surim014/building-a-blog-with-Next.js-13-and-React-Server-Components
+
 ------------
 
 ### 과제 설명
@@ -54,28 +74,28 @@ title: hello
 ```
 📦src
  ┣📦_posts
- ┃ ┣ 📜article01.md
- ┃ ┗ 📜home.md
+ ┃ ┣ 📜1.md
+ ┃ ┣ 📜2.md
+ ┃ ┗ 📜favicon.ico.md
  ┣📦.next
+ ┣📦app
+ ┃ ┣ 📂[postId]
+ ┃ ┃ ┗ 📜page.tsx
+ ┃ ┣ 📜layout.tsx
+ ┃ ┗ 📜page.tsx
  ┣📦components
  ┃ ┣ 📜container.tsx
  ┃ ┣ 📜date-formatter.tsx
- ┃ ┣ 📜layout.tsx
- ┃ ┣ 📜post-body.tsx
- ┃ ┣ 📜post-header.tsx
- ┃ ┗ 📜post-title.tsx
+ ┃ ┗ 📜intro.tsx
  ┣📦interfaces
  ┃ ┗ 📜post.ts
  ┣📦lib
  ┃ ┣ 📜api.ts
+ ┃ ┣ 📜registry.tsx
  ┃ ┗ 📜markdownToHtml.ts
  ┣📦node_modules
- ┣📦pages
- ┃ ┣ 📂posts
- ┃ ┃ ┗ 📜[slug].tsx
- ┃ ┣ 📜index.tsx
- ┃ ┣ 📜_app.tsx
- ┃ ┗ 📜_document.tsx
+ ┣📦styles
+ ┃ ┗ 📜index.css
  ┣ 📜.eslintrc.json
  ┣ 📜.gitignore
  ┣ 📜next-env.d.ts
@@ -87,9 +107,16 @@ title: hello
  ┣ 📜tsconfig.json
  ┗ 📜yarn.lock
 ```
-+ components : 페이지 안 컴포넌트 설정
-+ interfaces : 게시글 객체의 type 설정
++ components : 페이지 레이아웃 설정.
++ interfaces : 게시글 객체의 type 설정.
 + lib
-  + markdownToHtml : 마크다운 문법을 html 문법으로 변환해주는 파일
-  + api : 게시글들을 가져와 시간순서대로 정렬.
-+ pages : 렌더링되는 페이지들
+  + markdownToHtml : 마크다운 문법을 html 문법으로 변환해주는 파일.
+  + api : 마크다운 문법으로 된 게시글을 가져오는 파일.
++ app : 렌더링되는 페이지들
+
+------------
+
+### 배포 주소
+- https://preonboarding-fe-challange02.vercel.app/
+
+------------
