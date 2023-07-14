@@ -1,11 +1,13 @@
 ---
 postId : favicon.ico
-title: Article01
-slug : 'article01'
+title: favicon
+slug : 'spf13-vim-3-0-release-and-new-website'
 date: "2023-07-14"
-coverImage : "/images/back02.jpeg"
-description: favicon
+coverImage : "/images/back01.jpeg"
+description: 못된 favicon.ico
 ---
 
-## favicon.ico 떄문에 되는게 없다.
-도대체 이 친구는 왜 있는걸까.... 왜 그러는걸까........
+## favicon.ico
+꼭 이 녀석 에러를 잡겠다는 의지를 써둠.
+관련에러는 `Error: ENOENT: no such file or directory, open './_posts/favicon.ico.md'`
+임 
