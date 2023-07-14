@@ -8,9 +8,6 @@ import "@/styles/index.css"
 
 const IndexPage = () => {
   const posts = getAllPostData();
-
-  console.log("indexpage  posts : ", posts)
-
   return (
     <>
       <Head>

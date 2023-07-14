@@ -12,8 +12,6 @@ type Params = {
 export const generateStaticParams = async () => {
   const paths = readdirSync('./_posts')
 
-  console.log("generateStaticParams paths : ", paths)
-
   return paths;
 }
 
@@ -26,11 +24,7 @@ export const generateMetadata = async({params} : Params) => {
 }
 
 const DetailPage = async ({params} : Params) => {
-  console.log("DetailPage params : ", params)
   const {content} = await getPostDetailData(params.postId);
-
-  console.log("DetailPage content : ", content )
-
 
   return (
     <>
