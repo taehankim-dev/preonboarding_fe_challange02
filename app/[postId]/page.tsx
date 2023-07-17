@@ -1,7 +1,8 @@
 
+import Link from "next/link"
 import { readdirSync } from 'fs';
 import {getPostDetailData} from "@/lib/api";
-import {PageContainer} from '@/components/container';
+import {PageContainer, PageTitle, PageBody, PageButtonWrapStyle} from '@/components/detailPage';
 
 type Params = {
   params :{
@@ -24,14 +25,22 @@ export const generateMetadata = async({params} : Params) => {
 }
 
 const DetailPage = async ({params} : Params) => {
-  const {content} = await getPostDetailData(params.postId);
+  const {meta, content} = await getPostDetailData(params.postId);
 
   return (
     <>
       <PageContainer>
-        <article className="mb-32">
-          <div dangerouslySetInnerHTML={{__html : content}} />
-        </article>
+        <PageTitle title={meta.title}/>
+        <PageBody>
+          <div dangerouslySetInnerHTML={{__html : content}} />    
+        </PageBody>
+        <PageButtonWrapStyle>
+          <button>
+            <Link as={`/`} href={`/`}>
+              <span>목록으로</span>
+            </Link>
+          </button>
+        </PageButtonWrapStyle>
       </PageContainer>
     </>
   )
